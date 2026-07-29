@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>NGO Dashboard</title>
+</head>
+
+<body>
+
+<h1>
+Welcome NGO {{request.user.username}}
+</h1>
+
+
+<h3>
+NGO Options
+</h3>
+
+
+<ul>
+<li>
+    <a href="{% url 'create_campaign' %}">
+        Create Campaign
+    </a>
+</li>
+<li>My Campaigns</li>
+<li>Donation Reports</li>
+<li>Profile</li>
+<li>Logout</li>
+</ul>
+
+
+</body>
+
+</html>
