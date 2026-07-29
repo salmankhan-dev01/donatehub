@@ -1,33 +1,41 @@
 <!DOCTYPE html>
 <html>
 
-<head>
-    <title>DonateHub</title>
-</head>
-
-<body>
-
-<h1>
-Welcome to DonateHub
-</h1>
-
-
-<h2>
-Active Campaigns
-</h2>
-    {% for campaign in campaigns%}
-    <div>
-        <h3>{{campaign.title}}</h3>
-        <p>{{ campaign.description }}</p>
-        <p>Category:{{ campaign.category }}</p>
-        <p>Category:{{campaign.category}}</p>
-        <p>Goal:{{campaign.goal_amount}}</p>
-        <p>Raised:{{campaign.raised_amount}}</p>
-        <a href="{% url 'campaign_detail' campaign.id %}">View Details</a>
-    </div>
-    <hr>
-    {% empty %}
-    <p>No Campaign Available</p>
-    {% endfor %}
-</body>
+    <head>
+        <title>DonateHub</title>
+    </head>
+    <body>
+        <hr>
+        <a href="/">Home</a>
+        {% if user.is_authenticated %}
+            {% if user.role == "DONOR" %}
+            | <a href="{% url 'donor_dashboard' %}">Dashboard</a>
+            | <a href="{% url 'my_donations' %}">My Donations</a>
+            {% elif user.role == "NGO" %}
+            | <a href="{% url 'ngo_dashboard' %}">Dashboard</a>
+            | <a href="{% url 'create_campaign' %}">Create Campaign</a>
+            | <a href="{% url 'my_campaigns' %}">My Campaigns</a>
+        {% endif %}
+        {% else %}
+            | <a href="{% url 'login' %}">Login </a>
+            | <a href="{% url 'register' %}">Register</a>
+        {% endif %}
+        <hr>
+        <h1>Welcome to DonateHub</h1>
+        <h2>Active Campaigns</h2>
+        {% for campaign in campaigns%}
+        <div>
+            <h3>{{campaign.title}}</h3>
+            <p>{{ campaign.description }}</p>
+            <p>Category:{{ campaign.category }}</p>
+            <p>Category:{{campaign.category}}</p>
+            <p>Goal:{{campaign.goal_amount}}</p>
+            <p>Raised:{{campaign.raised_amount}}</p>
+            <a href="{% url 'campaign_detail' campaign.id %}">View Details</a>
+        </div>
+        <hr>
+        {% empty %}
+        <p>No Campaign Available</p>
+        {% endfor %}
+    </body>
 </html>

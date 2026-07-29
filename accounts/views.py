@@ -40,11 +40,7 @@ def user_login(request):
         if user is not None:
             login(request, user)
 
-            if user.role == "DONOR":
-                return redirect("donor_dashboard")
-
-            elif user.role == "NGO":
-                return redirect("ngo_dashboard")
+            return redirect("home")
 
         else:
             return render(
