@@ -23,7 +23,7 @@ Active Campaigns
         <p>Category:{{campaign.category}}</p>
         <p>Goal:{{campaign.goal_amount}}</p>
         <p>Raised:{{campaign.raised_amount}}</p>
-        <a href="#">View Details</a>
+        <a href="{% url 'campaign_detail' campaign.id %}">View Details</a>
     </div>
     <hr>
     {% empty %}
