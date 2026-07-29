@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect ,get_object_or_404
 
 # Create your views here.
 from django.contrib.auth.decorators import login_required
-
+from .models import Donation
 
 from campaigns.models import Campaign
 from .forms import DonationForm
@@ -36,6 +36,19 @@ def donate(request,id):
         {
             "campaign":campaign,
             "form":form
+        }
+    )
+
+@login_required
+def my_donations(request):
+    donations=Donation.objects.filter(
+        donor=request.user
+    )
+    return render(
+        request,
+        "donations/my_donations.html",
+        {
+            "donations":donations
         }
     )
         

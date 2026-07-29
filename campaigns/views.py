@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import login_required
 
 from .forms import CampaignForm
 from .models import Campaign
+from django.http import HttpResponseForbidden
 
 @login_required
 def create_campaign(request):
@@ -54,5 +55,21 @@ def campaign_detail(request,id):
         "campaigns/detail.html",
         {
             "campaign":campaign
+        }
+    )
+    
+    
+@login_required
+def my_campaigns(request):
+    if request.user.role !="NGO":
+        return HttpResponseForbidden("Access Denied!.")
+    campaigns=Campaign.objects.filter(
+        ngo=request.user
+    )
+    return render(
+        request,
+        "campaigns/my_campaigns.html",
+        {
+            "campaigns":campaigns
         }
     )

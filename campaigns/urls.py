@@ -14,4 +14,9 @@ urlpatterns = [
         views.campaign_detail,
         name="campaign_detail"
     ),
+    path(
+        "my/",
+        views.my_campaigns,
+        name="my_campaigns"
+    )
 ]

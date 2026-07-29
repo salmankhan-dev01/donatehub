@@ -1,35 +1,24 @@
 <!DOCTYPE html>
 <html>
-
-<head>
-<title>NGO Dashboard</title>
-</head>
-
-<body>
-
-<h1>
-Welcome NGO {{request.user.username}}
-</h1>
-
-
-<h3>
-NGO Options
-</h3>
-
-
-<ul>
-<li>
-    <a href="{% url 'create_campaign' %}">
-        Create Campaign
-    </a>
-</li>
-<li>My Campaigns</li>
-<li>Donation Reports</li>
-<li>Profile</li>
-<li>Logout</li>
-</ul>
-
-
-</body>
-
+    <head>
+        <title>NGO Dashboard</title>
+    </head>
+    <body>
+        <h1>Welcome NGO {{request.user.username}}</h1>
+        <h3>NGO Options</h3>
+        <ul>
+            <li> <a href="{% url 'create_campaign' %}">Create Campaign</a></li>
+            <li><a href="{% url 'my_campaigns' %}">My Campaigns</a></li>
+            <li>Donation Reports</li>
+            <a href="{% url 'profile' %}"><li>Profile</li></a>
+            <li>Logout</li>
+        </ul>
+        <h2>NGO Statistics</h2>
+        <div>
+            <p>Total Campaigns:{{ total_campaigns }} </p>
+            <p>Approved Campaigns:{{ approved_campaigns }}</p>
+            <p>Pending Campaigns:{{ pending_campaigns }}</p>
+            <p>Total Donations Received:{{ total_donations }}</p>
+        </div>
+    </body>
 </html>
