@@ -5,11 +5,14 @@ from django.contrib.auth.decorators import login_required
 from django.db import models
 from campaigns.models import Campaign
 from donations.models import Donation
+from django.shortcuts import redirect
 
 
 @login_required
 def donor_dashboard(request):
-
+    
+    if request.user.role != "DONOR":
+        return redirect("ngo_dashboard")
     return render(
         request,
         "dashboard/donor_dashboard.html"
@@ -18,6 +21,8 @@ def donor_dashboard(request):
 
 @login_required
 def ngo_dashboard(request):
+    if request.user.role != "NGO":
+        return redirect("donor_dashboard")
     campaigns=Campaign.objects.filter(
         ngo=request.user
     )

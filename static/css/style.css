@@ -62,3 +62,23 @@ img{
 .shadow{
     box-shadow:0 10px 25px rgba(0,0,0,.15)!important;
 }
+
+
+.hero-section{
+    background: linear-gradient(
+        rgba(0,0,0,0.55),
+        rgba(0,0,0,0.55)
+    ),
+    url("../images/hero.png");
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    min-height: 420px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}

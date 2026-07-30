@@ -4,10 +4,14 @@ from django.contrib.auth.decorators import login_required
 from .forms import CampaignForm
 from .models import Campaign
 from django.http import HttpResponseForbidden
+from django.shortcuts import redirect
 
 @login_required
 def create_campaign(request):
-
+    
+    if request.user.role != "NGO":
+        return redirect("home")
+    
     if request.method == "POST":
 
         form = CampaignForm(
@@ -55,14 +59,14 @@ def campaign_detail(request,id):
         "campaigns/detail.html",
         {
             "campaign":campaign
-        }
+        } 
     )
     
     
 @login_required
 def my_campaigns(request):
     if request.user.role !="NGO":
-        return HttpResponseForbidden("Access Denied!.")
+        return redirect("home")
     campaigns=Campaign.objects.filter(
         ngo=request.user
     )
