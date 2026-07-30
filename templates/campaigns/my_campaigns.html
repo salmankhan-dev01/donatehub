@@ -73,13 +73,22 @@
 
                         <td>
 
-                            <button class="btn btn-primary btn-sm" disabled>
+                            <a href="{% url 'edit_campaign' campaign.id %}"
+                                class="btn btn-primary btn-sm">
                                 Edit
-                            </button>
+                            </a>
 
-                            <button class="btn btn-danger btn-sm" disabled>
+                            <form method="POST"
+                                    action="{% url 'delete_campaign' campaign.id %}"
+                                    style="display:inline;"
+                                    onsubmit="return confirm('Are you sure you want to delete this campaign?');">
+                            
+                                {% csrf_token %}
+                                <button class="btn btn-danger btn-sm">
                                 Delete
                             </button>
+                            </form>
+                            
 
                         </td>
 

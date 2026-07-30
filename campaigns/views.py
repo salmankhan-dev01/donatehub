@@ -5,6 +5,7 @@ from .forms import CampaignForm
 from .models import Campaign
 from django.http import HttpResponseForbidden
 from django.shortcuts import redirect
+from .forms import CampaignUpdateForm
 
 @login_required
 def create_campaign(request):
@@ -77,5 +78,40 @@ def my_campaigns(request):
         "campaigns/my_campaigns.html",
         {
             "campaigns":campaigns
+        }
+    )
+    
+@login_required
+def delete_campaign(request,id):
+    campaign=get_object_or_404(
+        Campaign,
+        id=id,
+        ngo=request.user
+    )
+    if request.method == "POST":
+        campaign.delete()
+        return redirect("my_campaigns")
+    return redirect("my_campaigns")
+
+@login_required
+def edit_campaign(request,id):
+    campaign=get_object_or_404(
+        Campaign,
+        id=id,
+        ngo=request.user
+    )
+    
+    if request.method == "POST":
+        form=CampaignUpdateForm(request.POST, instance=campaign)
+        if form.is_valid():
+            form.save()
+            return redirect("my_campaigns")
+    else:
+        form=CampaignUpdateForm(instance=campaign)
+    return render(
+        request,
+        "campaigns/edit_campaign.html",
+        {
+            "form":form
         }
     )

@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}Edit Campaign{% endblock %}
+
+{% block content %}
+
+<div class="card shadow">
+
+    <div class="card-header bg-success text-white">
+        <h3 class="mb-0">Edit Campaign</h3>
+    </div>
+
+    <div class="card-body">
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+            <div class="mb-3">
+                <label class="form-label">Title<span class="text-danger">*</span></label>
+                {{ form.title }}
+                <div class="text-danger">
+                    {{ form.title.errors }}
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Category<span class="text-danger">*</span></label>
+                {{ form.category }}
+                <div class="text-danger">
+                    {{ form.category.errors }}
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Description<span class="text-danger">*</span></label>
+                {{ form.description }}
+                <div class="text-danger">
+                    {{ form.description.errors }}
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-success">
+                Update Campaign
+            </button>
+
+            <a href="{% url 'my_campaigns' %}" class="btn btn-secondary">
+                Cancel
+            </a>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

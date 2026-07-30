@@ -18,5 +18,15 @@ urlpatterns = [
         "my/",
         views.my_campaigns,
         name="my_campaigns"
+    ),
+    path(
+        "delete<int:id>/",
+        views.delete_campaign,
+        name="delete_campaign"
+    ),
+    path(
+        "edit/<int:id>/",
+        views.edit_campaign,
+        name="edit_campaign"
     )
 ]

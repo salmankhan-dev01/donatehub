@@ -53,3 +53,30 @@ class CampaignForm(forms.ModelForm):
         if amount is None or amount<=0:
             raise forms.ValidationError("Goal Amount must be greater than 0.")
         return amount
+
+
+class CampaignUpdateForm(forms.ModelForm):
+    class Meta:
+        model=Campaign
+        fields=[
+            "title",
+            "description",
+            "category"
+        ]
+    def __init__(self,*args,**kwargs):
+        super().__init__(*args,**kwargs)
+        
+        self.fields["title"].widget.attrs["class"] = "form-control"
+        self.fields["description"].widget.attrs["class"] = "form-control"
+        self.fields["category"].widget.attrs["class"] = "form-select"
+        
+        self.fields["title"].error_messages={
+            "required":"Title is required."
+        }
+        self.fields["description"].error_messages={
+            "required":"Description is required."
+        }
+        self.fields["category"].error_messages={
+            "required":"Category is required."
+        }
+            
