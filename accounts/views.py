@@ -6,6 +6,14 @@ from .forms import RegisterForm
 
 
 def register(request):
+    
+    if request.user.is_authenticated:
+        if request.user.role == "DONOR":
+            return redirect("donor_dashboard")
+        elif request.user.role == "NGO":
+            return redirect("ngo_dashboard")
+        return redirect("home")
+    
     if request.method == "POST":
         form = RegisterForm(request.POST) 
         if form.is_valid():
@@ -22,6 +30,12 @@ def register(request):
 
 
 def user_login(request):
+    if request.user.is_authenticated:
+        if request.user.role == "DONOR":
+            return redirect("donor_dashboard")
+        elif request.user.role == "NGO":
+            return redirect("ngo_dashboard")
+        return redirect("home")
 
     if request.method == "POST":
         username = request.POST.get("username")

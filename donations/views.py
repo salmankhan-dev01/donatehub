@@ -12,8 +12,9 @@ def donate(request,id):
     campaign=get_object_or_404(
         Campaign,
         id=id,
-        status="APPROVED"
     )
+    if campaign.status == "COMPLETED":
+        return redirect("campaign_detail",id=campaign.id)
     progress_percentage=0
     if campaign.goal_amount>0:
         progress_percentage=int((campaign.raised_amount/campaign.goal_amount)*100)
@@ -21,16 +22,29 @@ def donate(request,id):
     if request.method=="POST":
         form=DonationForm(request.POST)
         if form.is_valid():
+            
             donation=form.save(commit=False)
-            donation.donor=request.user
-            donation.campaign=campaign
             
-            donation.save()
+            remaining =campaign.goal_amount-campaign.raised_amount
             
-            campaign.raised_amount+=donation.amount
-            campaign.save()
+            if donation.amount> remaining:
+                form.add_error(
+                    "amount",
+                    f"Only ₹{remaining} is remaining. You can donate a maximum of ₹{remaining}."
+                )
+            else:
+                donation.donor=request.user
+                donation.campaign=campaign
+                donation.save()
             
-            return redirect("campaign_detail",id=campaign.id)
+                campaign.raised_amount+=donation.amount
+                
+                if campaign.raised_amount>=campaign.goal_amount:
+                    campaign.raised_amount=campaign.goal_amount
+                    campaign.status="COMPLETED"
+                campaign.save()
+            
+                return redirect("campaign_detail",id=campaign.id)
     else:
         form=DonationForm()
     

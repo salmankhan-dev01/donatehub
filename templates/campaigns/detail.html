@@ -68,16 +68,29 @@
         <h5>Raised Amount</h5>
         <p>₹{{ campaign.raised_amount }}</p>
 
+        <h5>Remaining Amount</h5>
+        <p class="text-danger">
+            ₹{{ remaining_amount }}
+        </p>
         <h5>Created By</h5>
         <p>{{ campaign.ngo.username }}</p>
 
+        {% if campaign.status == "COMPLETED" %}
+
+        <div class="alert alert-success">
+            <h5 class="mb-1">Goal Achieved</h5>
+            <p class="mb-0">
+                This campaign has reached its funding goal.
+            </p>
+        </div>
+        <button class="btn btn-success btn-lg" disabled>Goal Achieved</button>
+        {% else %}
+
         <a href="{% url 'donate' campaign.id %}"
            class="btn btn-success btn-lg">
-
             Donate Now
-
         </a>
-
+        {% endif %}
     </div>
 
 </div>

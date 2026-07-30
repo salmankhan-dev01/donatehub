@@ -6,7 +6,7 @@ from campaigns.models import Campaign
 
 def home(request):
     campaigns=Campaign.objects.filter(
-        status="APPROVED"
+        status__in=["APPROVED", "COMPLETED"]
     )
     return render(
         request,

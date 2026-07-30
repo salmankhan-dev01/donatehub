@@ -52,13 +52,15 @@ def campaign_detail(request,id):
     campaign=get_object_or_404(
         Campaign,
         id=id,
-        status="APPROVED"
+        status__in=["APPROVED","COMPLETED"]
     )
+    remaining_amount = campaign.goal_amount - campaign.raised_amount
     return render(
         request,
         "campaigns/detail.html",
         {
-            "campaign":campaign
+            "campaign":campaign,
+            "remaining_amount":remaining_amount
         } 
     )
     
