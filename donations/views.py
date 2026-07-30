@@ -36,14 +36,13 @@ def donate(request,id):
                 donation.donor=request.user
                 donation.campaign=campaign
                 donation.save()
-            
                 campaign.raised_amount+=donation.amount
                 
                 if campaign.raised_amount>=campaign.goal_amount:
                     campaign.raised_amount=campaign.goal_amount
                     campaign.status="COMPLETED"
                 campaign.save()
-            
+
                 return redirect("campaign_detail",id=campaign.id)
     else:
         form=DonationForm()
