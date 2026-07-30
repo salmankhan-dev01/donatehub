@@ -1,24 +1,88 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>NGO Dashboard</title>
-    </head>
-    <body>
-        <h1>Welcome NGO {{request.user.username}}</h1>
-        <h3>NGO Options</h3>
-        <ul>
-            <li> <a href="{% url 'create_campaign' %}">Create Campaign</a></li>
-            <li><a href="{% url 'my_campaigns' %}">My Campaigns</a></li>
-            <li>Donation Reports</li>
-            <a href="{% url 'profile' %}"><li>Profile</li></a>
-            <li>Logout</li>
-        </ul>
-        <h2>NGO Statistics</h2>
-        <div>
-            <p>Total Campaigns:{{ total_campaigns }} </p>
-            <p>Approved Campaigns:{{ approved_campaigns }}</p>
-            <p>Pending Campaigns:{{ pending_campaigns }}</p>
-            <p>Total Donations Received:{{ total_donations }}</p>
+{% extends 'base.html' %}
+
+{% block title %}NGO Dashboard{% endblock %}
+
+{% block content %}
+
+<div class="container">
+
+    <div class="mb-4">
+        <h2>Welcome, {{ request.user.username }}</h2>
+        <p class="text-muted">
+            Manage your campaigns and track donations.
+        </p>
+    </div>
+
+    <div class="row g-3 mb-4">
+
+        <div class="col-md-3">
+            <div class="card text-center shadow-sm">
+                <div class="card-body">
+                    <h5>Total Campaigns</h5>
+                    <h2>{{ total_campaigns }}</h2>
+                </div>
+            </div>
         </div>
-    </body>
-</html>
+
+        <div class="col-md-3">
+            <div class="card text-center shadow-sm border-success">
+                <div class="card-body">
+                    <h5>Approved</h5>
+                    <h2 class="text-success">{{ approved_campaigns }}</h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card text-center shadow-sm border-warning">
+                <div class="card-body">
+                    <h5>Pending</h5>
+                    <h2 class="text-warning">{{ pending_campaigns }}</h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card text-center shadow-sm border-primary">
+                <div class="card-body">
+                    <h5>Total Donations</h5>
+                    <h2 class="text-primary">{{ total_donations }}</h2>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="card shadow">
+        <div class="card-header">
+            <h4 class="mb-0">Quick Actions</h4>
+        </div>
+
+        <div class="list-group list-group-flush">
+
+            <a href="{% url 'create_campaign' %}" class="list-group-item list-group-item-action">
+                ➕ Create Campaign
+            </a>
+
+            <a href="{% url 'my_campaigns' %}" class="list-group-item list-group-item-action">
+                📋 My Campaigns
+            </a>
+
+            <a href="#" class="list-group-item list-group-item-action">
+                📊 Donation Reports
+            </a>
+
+            <a href="{% url 'profile' %}" class="list-group-item list-group-item-action">
+                👤 Profile
+            </a>
+
+            <a href="{% url 'logout' %}" class="list-group-item list-group-item-action text-danger">
+                🚪 Logout
+            </a>
+
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

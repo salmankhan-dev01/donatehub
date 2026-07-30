@@ -5,11 +5,11 @@ from django.conf import settings
 class Campaign(models.Model):
 
     CATEGORY_CHOICES = [
+        ("OTHER", "Other"),
         ("MEDICAL", "Medical"),
         ("EDUCATION", "Education"),
         ("FOOD", "Food"),
         ("DISASTER", "Disaster Relief"),
-        ("OTHER", "Other"),
     ]
 
     STATUS_CHOICES = [
@@ -34,7 +34,8 @@ class Campaign(models.Model):
 
     category = models.CharField(
         max_length=20,
-        choices=CATEGORY_CHOICES
+        choices=CATEGORY_CHOICES,
+        default="OTHER"
     )
 
     goal_amount = models.DecimalField(

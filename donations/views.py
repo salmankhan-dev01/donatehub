@@ -14,6 +14,10 @@ def donate(request,id):
         id=id,
         status="APPROVED"
     )
+    progress_percentage=0
+    if campaign.goal_amount>0:
+        progress_percentage=int((campaign.raised_amount/campaign.goal_amount)*100)
+        
     if request.method=="POST":
         form=DonationForm(request.POST)
         if form.is_valid():
@@ -35,7 +39,8 @@ def donate(request,id):
         "donations/donate.html",
         {
             "campaign":campaign,
-            "form":form
+            "form":form,
+            "progress_percentage":progress_percentage
         }
     )
 

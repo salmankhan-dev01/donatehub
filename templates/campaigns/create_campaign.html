@@ -1,37 +1,76 @@
-<!DOCTYPE html>
+{% extends "base.html" %}
 
-<html>
+{% block title %}Create Campaign{% endblock %}
 
-<head>
-<title>Create Campaign</title>
-</head>
+{% block content %}
 
+<div class="row justify-content-center">
 
-<body>
+    <div class="col-lg-8">
 
+        <div class="card shadow">
 
-<h1>
-Create Campaign
-</h1>
+            <div class="card-header bg-success text-white">
+                <h3 class="mb-0">Create New Campaign</h3>
+            </div>
 
+            <div class="card-body">
 
-<form method="POST" enctype="multipart/form-data">
+                <form method="POST" enctype="multipart/form-data">
 
+                    {% csrf_token %}
 
-{% csrf_token %}
+                    {% for field in form %}
 
+                        <div class="mb-3">
 
-{{ form.as_p }}
+                            <label class="form-label">
+                                {{ field.label }}
 
+                                {% if field.field.required %}
+                                    <span class="text-danger">*</span>
+                                {% endif %}
 
-<button type="submit">
-Create
-</button>
+                            </label>
 
+                            {{ field }}
 
-</form>
+                            {% if field.help_text %}
+                                <div class="form-text">
+                                    {{ field.help_text }}
+                                </div>
+                            {% endif %}
 
+                            {% if field.errors %}
+                                <div class="text-danger small mt-1">
+                                    {{ field.errors }}
+                                </div>
+                            {% endif %}
 
-</body>
+                        </div>
 
-</html>
+                    {% endfor %}
+
+                    <div class="d-flex justify-content-between">
+
+                        <a href="{% url 'ngo_dashboard' %}" class="btn btn-secondary">
+                            Back
+                        </a>
+
+                        <button type="submit" class="btn btn-success">
+                            Create Campaign
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

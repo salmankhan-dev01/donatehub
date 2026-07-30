@@ -1,0 +1,103 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-success">
+    <div class="container">
+
+        <a class="navbar-brand fw-bold" href="/">
+            DonateHub
+        </a>
+
+        <button class="navbar-toggler" type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarNav">
+
+            <span class="navbar-toggler-icon"></span>
+
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+
+            <ul class="navbar-nav me-auto">
+
+                <li class="nav-item">
+                    <a class="nav-link" href="/">Home</a>
+                </li>
+
+                {% if user.is_authenticated %}
+
+                    {% if user.role == "DONOR" %}
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'donor_dashboard' %}">
+                                Dashboard
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'my_donations' %}">
+                                My Donations
+                            </a>
+                        </li>
+
+                    {% elif user.role == "NGO" %}
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'ngo_dashboard' %}">
+                                Dashboard
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'create_campaign' %}">
+                                Create Campaign
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'my_campaigns' %}">
+                                My Campaigns
+                            </a>
+                        </li>
+
+                    {% endif %}
+
+                {% endif %}
+
+            </ul>
+
+            <ul class="navbar-nav">
+
+                {% if user.is_authenticated %}
+
+                    <li class="nav-item">
+                        <span class="navbar-text me-3">
+                            Hello, {{ user.username }}
+                        </span>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="btn btn-light btn-sm" href="{% url 'logout' %}">
+                            Logout
+                        </a>
+                    </li>
+
+                {% else %}
+
+                    <li class="nav-item me-2">
+                        <a class="btn btn-outline-light" href="{% url 'login' %}">
+                            Login
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="btn btn-light" href="{% url 'register' %}">
+                            Register
+                        </a>
+                    </li>
+
+                {% endif %}
+
+            </ul>
+
+        </div>
+
+    </div>
+</nav>

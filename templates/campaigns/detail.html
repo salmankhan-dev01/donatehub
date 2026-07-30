@@ -1,20 +1,61 @@
-<!DOCTYPE html>
+{% extends 'base.html' %}
 
-<html>
+{% block title %}
+{{ campaign.title }}
+{% endblock %}
 
-<head>
-<title>{{campaign.title}}</title>
-</head>
+{% block content %}
 
+<div class="row">
 
-<body>
-    <h1>{{campaign.title}}</h1>
-    <p>{{campaign.description}}</p>
-    <p>Category: {{campaign.category}}</p>
-    <p>Goal Amount: {{campaign.goal_amount}}</p>
-    <p>Raised Amount: {{campaign.raised_amount}}</p>
-    <p>Created By: {{campaign.ngo.username}}</p>
-    <a href="{% url 'donate' campaign.id %}">Donate Now</a>
+    <!-- Campaign Image -->
+    <div class="col-lg-6 mb-4">
 
-</body>
-</html>
+        {% if campaign.image %}
+            <img src="{{ campaign.image.url }}"
+                 class="img-fluid rounded shadow"
+                 alt="{{ campaign.title }}">
+        {% else %}
+            <img src="https://placehold.co/700x450?text=No+Image"
+                 class="img-fluid rounded shadow"
+                 alt="No Image">
+        {% endif %}
+
+    </div>
+
+    <!-- Campaign Details -->
+    <div class="col-lg-6">
+
+        <span class="badge bg-success mb-2">
+            {{ campaign.category }}
+        </span>
+
+        <h2>{{ campaign.title }}</h2>
+
+        <p class="text-muted">
+            {{ campaign.description }}
+        </p>
+
+        <hr>
+
+        <h5>Goal Amount</h5>
+        <p>₹{{ campaign.goal_amount }}</p>
+
+        <h5>Raised Amount</h5>
+        <p>₹{{ campaign.raised_amount }}</p>
+
+        <h5>Created By</h5>
+        <p>{{ campaign.ngo.username }}</p>
+
+        <a href="{% url 'donate' campaign.id %}"
+           class="btn btn-success btn-lg">
+
+            Donate Now
+
+        </a>
+
+    </div>
+
+</div>
+
+{% endblock %}

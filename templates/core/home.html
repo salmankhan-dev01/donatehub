@@ -1,41 +1,89 @@
-<!DOCTYPE html>
-<html>
+{% extends 'base.html' %}
 
-    <head>
-        <title>DonateHub</title>
-    </head>
-    <body>
-        <hr>
-        <a href="/">Home</a>
-        {% if user.is_authenticated %}
-            {% if user.role == "DONOR" %}
-            | <a href="{% url 'donor_dashboard' %}">Dashboard</a>
-            | <a href="{% url 'my_donations' %}">My Donations</a>
-            {% elif user.role == "NGO" %}
-            | <a href="{% url 'ngo_dashboard' %}">Dashboard</a>
-            | <a href="{% url 'create_campaign' %}">Create Campaign</a>
-            | <a href="{% url 'my_campaigns' %}">My Campaigns</a>
-        {% endif %}
-        {% else %}
-            | <a href="{% url 'login' %}">Login </a>
-            | <a href="{% url 'register' %}">Register</a>
-        {% endif %}
-        <hr>
-        <h1>Welcome to DonateHub</h1>
-        <h2>Active Campaigns</h2>
-        {% for campaign in campaigns%}
-        <div>
-            <h3>{{campaign.title}}</h3>
-            <p>{{ campaign.description }}</p>
-            <p>Category:{{ campaign.category }}</p>
-            <p>Category:{{campaign.category}}</p>
-            <p>Goal:{{campaign.goal_amount}}</p>
-            <p>Raised:{{campaign.raised_amount}}</p>
-            <a href="{% url 'campaign_detail' campaign.id %}">View Details</a>
+{% block title %}DonateHub{% endblock %}
+
+{% block content %}
+
+<!-- Hero Section -->
+<div class="bg-success text-white text-center rounded p-5 mb-5">
+    <h1>Welcome to DonateHub</h1>
+    <p class="lead">
+        Help NGOs raise funds and make a positive impact.
+    </p>
+
+    <a href="#campaigns" class="btn btn-light btn-lg">
+        Explore Campaigns
+    </a>
+</div>
+
+<!-- Campaign Section -->
+<h2 id="campaigns" class="mb-4">Active Campaigns</h2>
+
+<div class="row">
+
+    {% for campaign in campaigns %}
+
+    <div class="col-md-4 mb-4">
+
+        <div class="card h-100 shadow-sm">
+
+            {% if campaign.image %}
+                <img src="{{ campaign.image.url }}"
+                     class="card-img-top"
+                     style="height:220px; object-fit:cover;">
+            {% endif %}
+
+            <div class="card-body">
+
+                <span class="badge bg-success">
+                    {{ campaign.category }}
+                </span>
+
+                <h4 class="mt-3">
+                    {{ campaign.title }}
+                </h4>
+
+                <p>
+                    {{ campaign.description|truncatewords:20 }}
+                </p>
+
+                <p>
+                    <strong>Goal:</strong>
+                    ₹{{ campaign.goal_amount }}
+                </p>
+
+                <p>
+                    <strong>Raised:</strong>
+                    ₹{{ campaign.raised_amount }}
+                </p>
+
+                <a href="{% url 'campaign_detail' campaign.id %}"
+                   class="btn btn-success w-100">
+
+                    View Details
+
+                </a>
+
+            </div>
+
         </div>
-        <hr>
-        {% empty %}
-        <p>No Campaign Available</p>
-        {% endfor %}
-    </body>
-</html>
+
+    </div>
+
+    {% empty %}
+
+    <div class="col-12">
+
+        <div class="alert alert-warning">
+
+            No Campaign Available.
+
+        </div>
+
+    </div>
+
+    {% endfor %}
+
+</div>
+
+{% endblock %}

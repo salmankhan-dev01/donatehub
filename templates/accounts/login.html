@@ -1,52 +1,76 @@
-<!DOCTYPE html>
-<html>
+{% extends 'base.html' %}
 
-<head>
-    <title>Login</title>
-</head>
+{% block title %}Login{% endblock %}
 
-<body>
+{% block content %}
 
-<h2>Login</h2>
+<div class="row justify-content-center">
 
+    <div class="col-md-6 col-lg-5">
 
-<form method="POST">
+        <div class="card shadow">
 
-{% csrf_token %}
+            <div class="card-header bg-success text-white text-center">
+                <h3 class="mb-0">Login</h3>
+            </div>
 
-<label>Username</label>
-<input 
-type="text"
-name="username"
->
+            <div class="card-body">
 
+                {% if error %}
+                    <div class="alert alert-danger">
+                        {{ error }}
+                    </div>
+                {% endif %}
 
-<br><br>
+                <form method="POST">
 
+                    {% csrf_token %}
 
-<label>Password</label>
-<input 
-type="password"
-name="password"
->
+                    <div class="mb-3">
+                        <label class="form-label">Username<span class="text-danger">*</span></label>
+                        <input
+                            type="text"
+                            name="username"
+                            class="form-control"
+                            placeholder="Enter Username"
+                            required
+                        >
+                    </div>
 
+                    <div class="mb-3">
+                        <label class="form-label">Password<span class="text-danger">*</span></label>
+                        <input
+                            type="password"
+                            name="password"
+                            class="form-control"
+                            placeholder="Enter Password"
+                            required
+                        >
+                    </div>
 
-<br><br>
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-success">
+                            Login
+                        </button>
+                    </div>
 
+                </form>
 
-<button type="submit">
-Login
-</button>
+                <hr>
 
+                <p class="text-center mb-0">
+                    Don't have an account?
+                    <a href="{% url 'register' %}">
+                        Register
+                    </a>
+                </p>
 
-</form>
+            </div>
 
+        </div>
 
-{% if error %}
-<p>{{error}}</p>
-{% endif %}
+    </div>
 
+</div>
 
-</body>
-
-</html>
+{% endblock %}

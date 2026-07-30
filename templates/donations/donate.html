@@ -1,20 +1,87 @@
-<html>
+{% extends "base.html" %}
 
-<head>
-    <title>Donate</title>
-</head>
+{% block title %}Donate{% endblock %}
 
-<body>
+{% block content %}
 
-    <h1>{{ campaign.title }}</h1>
-    <p>Goal: {{campaign.goal_amount}}</p>
-    <p>Rased: {{campaign.raised_amount}}</p>
-    <form method="POST">
-         {% csrf_token %}
-         {{form.as_p}}
-        <button type="submit">
-            Donate
-        </button>
-    </form>
-</body>
-</html>
+<div class="row justify-content-center">
+
+    <div class="col-lg-6">
+
+        <div class="card shadow">
+
+            <div class="card-header bg-success text-white text-center">
+                <h3 class="mb-0">Donate to Campaign</h3>
+            </div>
+
+            <div class="card-body">
+
+                <h4 class="text-center mb-4">
+                    {{ campaign.title }}
+                </h4>
+
+                <div class="mb-3">
+                    <strong>Goal Amount:</strong>
+                    ₹{{ campaign.goal_amount }}
+                </div>
+
+                <div class="mb-3">
+                    <strong>Raised Amount:</strong>
+                    ₹{{ campaign.raised_amount }}
+                </div>
+
+                <div class="progress mb-4" style="height:20px;">
+
+                    <div class="progress-bar bg-success"
+                         role="progressbar"
+                         style="width: {{ progress_percentage }}%;">
+
+                        {{ progress_percentage }}%
+
+                    </div>
+
+                </div>
+
+                <form method="POST">
+
+                    {% csrf_token %}
+
+                    {% for field in form %}
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+                                {{ field.label }}
+                            </label>
+
+                            {{ field }}
+
+                            {% if field.errors %}
+                                <div class="text-danger small">
+                                    {{ field.errors }}
+                                </div>
+                            {% endif %}
+
+                        </div>
+
+                    {% endfor %}
+
+                    <div class="d-grid">
+
+                        <button type="submit" class="btn btn-success btn-lg">
+                            Donate Now
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}
